@@ -1,0 +1,474 @@
+<title>Halyk Travel Georgia — прототип</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #eef1f0;
+}
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.phone-frame {
+  width: 380px;
+  height: 780px;
+  background: #ffffff;
+  border-radius: 36px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 8px solid #111;
+  position: relative;
+}
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 22px;
+  background: #111;
+  border-radius: 0 0 14px 14px;
+  z-index: 2;
+}
+.phone-header {
+  background: #00875a;
+  color: #fff;
+  text-align: center;
+  padding: 18px 0 10px;
+  font-weight: 600;
+  font-size: 15px;
+}
+.phone-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.screen-area {
+  flex: 1;
+  overflow-y: auto;
+  background: #f7f9f8;
+}
+.screen { padding: 18px; }
+.greeting { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: #00875a; color: #fff;
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.greeting-name { font-weight: 600; color: #111; }
+.greeting-sub { font-size: 13px; color: #667; }
+.banner-card {
+  background: linear-gradient(135deg, #00875a, #00583b);
+  color: #fff; border-radius: 16px; padding: 18px; margin-bottom: 20px;
+}
+.banner-title { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+.banner-text { font-size: 13px; line-height: 1.5; opacity: 0.92; margin: 0 0 14px; }
+.section-title {
+  font-size: 13px; font-weight: 600; color: #556;
+  text-transform: uppercase; letter-spacing: 0.03em; margin: 18px 0 8px;
+}
+.account-row {
+  display: flex; justify-content: space-between; background: #fff;
+  border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; font-size: 14px;
+  color: #223; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.account-balance { font-weight: 600; }
+.btn-primary {
+  width: 100%; background: #fff; color: #00583b; border: none;
+  border-radius: 10px; padding: 12px; font-weight: 700; font-size: 14px; cursor: pointer;
+}
+.status-card .btn-secondary, .savings-card .btn-primary, .push-banner .btn-primary {
+  background: #00875a; color: #fff;
+}
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-secondary {
+  width: 100%; background: #fff; color: #00875a; border: 1.5px solid #00875a;
+  border-radius: 10px; padding: 11px; font-weight: 600; font-size: 14px; cursor: pointer; margin-top: 12px;
+}
+.link-back {
+  background: none; border: none; color: #00875a; font-weight: 600;
+  padding: 0; margin-bottom: 14px; cursor: pointer; font-size: 14px;
+}
+.screen-title { margin: 0 0 10px; font-size: 19px; color: #111; }
+.screen-text { font-size: 13.5px; color: #556; line-height: 1.5; }
+.feature-list { padding-left: 18px; font-size: 13.5px; color: #334; line-height: 1.7; }
+.consent-row {
+  display: flex; gap: 10px; align-items: flex-start; background: #fff;
+  border-radius: 12px; padding: 12px; font-size: 12.5px; color: #334; margin: 16px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.consent-row input { margin-top: 2px; }
+.confirm-card {
+  background: #fff; border-radius: 12px; padding: 14px; margin: 16px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.confirm-row {
+  display: flex; justify-content: space-between; font-size: 13.5px; color: #334;
+  padding: 6px 0; border-bottom: 1px solid #eef1f0;
+}
+.confirm-row:last-child { border-bottom: none; }
+.status-card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+.status-title { font-weight: 700; font-size: 15px; color: #111; margin-bottom: 10px; }
+.status-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.badge { font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 20px; background: #eef1f0; color: #445; }
+.badge-green { background: #dff5ea; color: #00875a; }
+.status-since { font-size: 12px; color: #889; margin-bottom: 6px; }
+.savings-card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 1px 2px rgba(0,0,0,0.06); }
+.field-label { display: block; font-size: 12px; color: #667; margin-bottom: 6px; }
+.text-input { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1.5px solid #dde3e0; font-size: 14px; margin-bottom: 12px; }
+.error-text { color: #c0392b; font-size: 12.5px; margin-top: 8px; }
+.conversion-result { margin-top: 14px; border-top: 1px solid #eef1f0; padding-top: 12px; }
+.conversion-row { display: flex; justify-content: space-between; font-size: 13px; color: #445; padding: 5px 0; }
+.conversion-row.highlight { font-weight: 600; color: #111; }
+.conversion-row.savings { color: #00875a; font-weight: 700; }
+.total-saved { margin-top: 12px; font-size: 12.5px; color: #556; }
+.branch-card { background: #fff; border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.branch-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.branch-hours { font-size: 11px; color: #889; }
+.branch-name { font-size: 13.5px; font-weight: 600; color: #223; }
+.branch-address { font-size: 12.5px; color: #667; }
+.lang-toggle { display: flex; gap: 8px; margin-bottom: 14px; }
+.lang-toggle button {
+  flex: 1; padding: 8px; border-radius: 10px; border: 1.5px solid #dde3e0;
+  background: #fff; font-size: 12.5px; font-weight: 600; color: #556; cursor: pointer;
+}
+.lang-toggle button.active { background: #00875a; border-color: #00875a; color: #fff; }
+.faq-item { background: #fff; border-radius: 12px; margin-bottom: 8px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.faq-question {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  background: none; border: none; padding: 13px 14px; font-size: 13px; font-weight: 600;
+  color: #223; text-align: left; cursor: pointer;
+}
+.faq-answer { padding: 0 14px 14px; font-size: 12.5px; color: #556; line-height: 1.5; }
+.support-card { margin-top: 18px; }
+.push-banner { background: #fff7e6; border: 1px solid #ffdf9b; border-radius: 14px; padding: 14px; margin-bottom: 16px; }
+.push-title { font-weight: 700; font-size: 14px; color: #7a5200; margin-bottom: 6px; }
+.push-text { font-size: 12.5px; color: #7a5200; line-height: 1.5; margin: 0 0 12px; }
+.transaction-row {
+  display: flex; justify-content: space-between; align-items: center; background: #fff;
+  border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.transaction-merchant { font-size: 13.5px; font-weight: 600; color: #223; }
+.transaction-meta { font-size: 11.5px; color: #889; margin-top: 2px; display: flex; align-items: center; gap: 6px; }
+.transaction-flag { padding: 2px 6px; }
+.transaction-amount { font-size: 13.5px; font-weight: 600; color: #223; }
+.offline-banner { background: #fdecea; color: #c0392b; font-size: 12px; padding: 8px 12px; border-radius: 10px; margin-bottom: 12px; }
+.bottom-nav { display: flex; border-top: 1px solid #eef1f0; background: #fff; }
+.nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 10px 0 12px; background: none; border: none; font-size: 10.5px; color: #99a; cursor: pointer;
+}
+.nav-item.active { color: #00875a; }
+.nav-icon { font-size: 18px; }
+.preview-note {
+  position: fixed; top: 12px; left: 12px; background: #111; color: #fff;
+  font-size: 11px; padding: 6px 10px; border-radius: 8px; opacity: 0.75;
+}
+</style>
+
+<div class="preview-note">Прототип · моковые данные, без реального backend</div>
+<div class="app-shell">
+  <div class="phone-frame">
+    <div class="phone-notch"></div>
+    <div class="phone-header">Halyk Homebank</div>
+    <div class="phone-body">
+      <div class="screen-area" id="screen-area"></div>
+      <nav class="bottom-nav" id="bottom-nav"></nav>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- Mock data (mirrors backend/src/data/*.json and routes/travel.js) ----
+const BRANCHES = [
+  { id: "tbs-vake", city: "Тбилиси", type: "branch", name: "Halyk Bank Georgia — отделение Vake", address: "ул. Чавчавадзе, 37, Тбилиси", hours: "Пн–Пт 09:30–18:00" },
+  { id: "tbs-vera", city: "Тбилиси", type: "atm", name: "Банкомат Halyk Bank Georgia — Vera", address: "пр. Руставели, 12, Тбилиси", hours: "Круглосуточно" },
+  { id: "bat-center", city: "Батуми", type: "branch", name: "Halyk Bank Georgia — отделение Батуми", address: "ул. Гогебашвили, 4, Батуми", hours: "Пн–Пт 09:30–18:00" },
+  { id: "bat-atm", city: "Батуми", type: "atm", name: "Банкомат Halyk Bank Georgia — набережная", address: "приморский бульвар, Батуми", hours: "Круглосуточно" },
+  { id: "kut-center", city: "Кутаиси", type: "branch", name: "Halyk Bank Georgia — отделение Кутаиси", address: "ул. Царя Давида Строителя, 8, Кутаиси", hours: "Пн–Пт 09:30–18:00" },
+];
+
+const FAQ = {
+  ru: [
+    { id: "fx", question: "Как работает прямая конвертация тенге в лари?", answer: "После активации режима «Еду в Грузию» операции по вашей карте в Грузии конвертируются из тенге в лари напрямую, без промежуточной конвертации в доллар или евро." },
+    { id: "block", question: "Почему раньше блокировали карту в Грузии?", answer: "Система фрод-мониторинга могла расценивать платежи за границей как подозрительную активность. После активации режима поездки банк заранее знает о вашей поездке и снижает количество ложных блокировок." },
+    { id: "support", question: "Куда обращаться при потере карты в Грузии?", answer: "Обратитесь в любое отделение Halyk Bank Georgia (Тбилиси, Батуми, Кутаиси) — адреса доступны на карте в приложении, — либо в поддержку через приложение, запрос будет переадресован в местный офис." },
+    { id: "consent", question: "Какие данные передаются между Halyk Kazakhstan и Halyk Bank Georgia?", answer: "Только признак «клиент в поездке» и минимально необходимые данные для маршрутизации платежей и поддержки. Передача происходит только после вашего явного согласия (opt-in)." },
+  ],
+  kk: [
+    { id: "fx", question: "Теңгені лариге тікелей айырбастау қалай жұмыс істейді?", answer: "«Грузияға барамын» режимін іске қосқаннан кейін Грузиядағы картаңызбен жасалған операциялар доллар немесе еуроға айналдырылмай, тікелей теңгеден лариге ауыстырылады." },
+    { id: "block", question: "Неге бұрын картамды Грузияда бұғаттайтын?", answer: "Алаяқтықты мониторингтеу жүйесі шетелдегі төлемдерді күдікті деп санауы мүмкін еді. Сапар режимін іске қосқаннан кейін банк сіздің сапарыңыз туралы алдын ала біледі және жалған бұғаттауларды азайтады." },
+    { id: "support", question: "Грузияда картамды жоғалтсам қайда жүгінемін?", answer: "Halyk Bank Georgia-ның кез келген бөліміне жүгініңіз (Тбилиси, Батуми, Кутаиси) — мекенжайлар қосымшадағы картада қолжетімді, — немесе қосымша арқылы қолдау қызметіне жазыңыз, өтінішіңіз жергілікті кеңсеге бағытталады." },
+    { id: "consent", question: "Halyk Kazakhstan мен Halyk Bank Georgia арасында қандай деректер беріледі?", answer: "Тек «клиент сапарда» белгісі және төлемдерді бағыттау мен қолдау көрсету үшін қажетті ең аз деректер. Деректер тек сіздің анық келісіміңізден (opt-in) кейін ғана беріледі." },
+  ],
+};
+
+const TRANSACTIONS = [
+  { id: "t1", merchant: "Air Astra", category: "flight_ticket", amountKzt: 210000, date: "2026-08-18", travelTrigger: true },
+  { id: "t2", merchant: "Magnum", category: "groceries", amountKzt: 18500, date: "2026-08-15", travelTrigger: false },
+  { id: "t3", merchant: "Booking.com — Tbilisi", category: "hotel", amountKzt: 340000, date: "2026-08-19", travelTrigger: true },
+];
+const CATEGORY_LABELS = { flight_ticket: "Авиабилет", hotel: "Отель", groceries: "Продукты" };
+
+const RATE_KZT_USD = 0.00185;
+const RATE_USD_GEL = 2.7;
+function convert(amountKzt) {
+  const fairGel = amountKzt * RATE_KZT_USD * RATE_USD_GEL;
+  const doubleConversionGel = fairGel * (1 - 0.03) * (1 - 0.025);
+  const directGel = fairGel * (1 - 0.015);
+  const savingsGel = directGel - doubleConversionGel;
+  const savingsPct = (savingsGel / doubleConversionGel) * 100;
+  const r2 = (n) => Math.round(n * 100) / 100;
+  return {
+    doubleConversion: { gel: r2(doubleConversionGel), route: "KZT → USD → GEL" },
+    directConversion: { gel: r2(directGel), route: "KZT → GEL" },
+    savings: { gel: r2(savingsGel), pct: r2(savingsPct) },
+  };
+}
+
+// ---- App state ----
+const state = {
+  tab: "home",
+  flow: null, // null | "activate1" | "activate2"
+  status: { active: false, consent: false, activatedAt: null },
+  faqLang: "ru",
+  faqOpenId: null,
+  supportSent: false,
+  totalSavedGel: 0,
+  lastResult: null,
+};
+
+const screenArea = document.getElementById("screen-area");
+const bottomNav = document.getElementById("bottom-nav");
+
+function render() {
+  renderNav();
+  if (state.flow === "activate1") return renderActivateStep1();
+  if (state.flow === "activate2") return renderActivateStep2();
+  if (state.tab === "branches") return renderBranches();
+  if (state.tab === "faq") return renderFaq();
+  if (state.tab === "transactions") return renderTransactions();
+  if (state.status.active) return renderDashboard();
+  return renderHome();
+}
+
+function renderNav() {
+  if (state.flow) { bottomNav.innerHTML = ""; return; }
+  const items = [
+    { id: "home", label: "Главная", icon: "🏠" },
+    { id: "transactions", label: "Транзакции", icon: "💳" },
+    { id: "branches", label: "Отделения", icon: "📍" },
+    { id: "faq", label: "Поддержка", icon: "💬" },
+  ];
+  bottomNav.innerHTML = items.map(i => `
+    <button class="nav-item ${state.tab === i.id ? "active" : ""}" data-nav="${i.id}">
+      <span class="nav-icon">${i.icon}</span><span>${i.label}</span>
+    </button>`).join("");
+  bottomNav.querySelectorAll("[data-nav]").forEach(btn => {
+    btn.onclick = () => { state.tab = btn.dataset.nav; render(); };
+  });
+}
+
+function renderHome() {
+  screenArea.innerHTML = `
+    <div class="screen">
+      <div class="greeting">
+        <div class="avatar">А</div>
+        <div>
+          <div class="greeting-name">Айгерим Т.</div>
+          <div class="greeting-sub">Карта •• 4471</div>
+        </div>
+      </div>
+      <div class="banner-card">
+        <div class="banner-title">✈️ Едете в Грузию?</div>
+        <p class="banner-text">Активируйте режим поездки: прямая конвертация тенге в лари без потерь на двойной конвертации и меньше ложных блокировок карты.</p>
+        <button class="btn-primary" id="activate-btn">Активировать «Еду в Грузию»</button>
+      </div>
+      <div class="section-title">Ваши счета</div>
+      <div class="account-row"><span>Карта Halyk Bonus</span><span class="account-balance">1 240 500 ₸</span></div>
+      <div class="account-row"><span>Депозит</span><span class="account-balance">3 800 000 ₸</span></div>
+    </div>`;
+  document.getElementById("activate-btn").onclick = () => { state.flow = "activate1"; render(); };
+}
+
+function renderActivateStep1() {
+  screenArea.innerHTML = `
+    <div class="screen">
+      <button class="link-back" id="cancel-btn">← Назад</button>
+      <h2 class="screen-title">Режим «Еду в Грузию»</h2>
+      <p class="screen-text">Что изменится после активации:</p>
+      <ul class="feature-list">
+        <li>Прямая конвертация KZT → GEL без промежуточного доллара/евро</li>
+        <li>Отметка «в поездке» снижает ложные блокировки карты</li>
+        <li>Доступ к карте отделений и банкоматов Halyk Bank Georgia</li>
+        <li>Поддержка на русском и казахском с переадресацией в Грузию</li>
+      </ul>
+      <label class="consent-row">
+        <input type="checkbox" id="consent-check" />
+        <span>Я согласен(а) на передачу признака «в поездке» и минимально необходимых данных между Halyk Kazakhstan и Halyk Bank Georgia для работы функции</span>
+      </label>
+      <button class="btn-primary" id="next-btn" disabled>Продолжить</button>
+    </div>`;
+  document.getElementById("cancel-btn").onclick = () => { state.flow = null; render(); };
+  const checkbox = document.getElementById("consent-check");
+  const nextBtn = document.getElementById("next-btn");
+  checkbox.onchange = () => { nextBtn.disabled = !checkbox.checked; };
+  nextBtn.onclick = () => { if (checkbox.checked) { state.flow = "activate2"; render(); } };
+}
+
+function renderActivateStep2() {
+  screenArea.innerHTML = `
+    <div class="screen">
+      <button class="link-back" id="back-btn">← Назад</button>
+      <h2 class="screen-title">Подтверждение</h2>
+      <p class="screen-text">Вы авторизованы в Homebank, дополнительная верификация не требуется.</p>
+      <div class="confirm-card">
+        <div class="confirm-row"><span>Режим</span><span>Еду в Грузию</span></div>
+        <div class="confirm-row"><span>Конвертация</span><span>KZT → GEL напрямую</span></div>
+        <div class="confirm-row"><span>Фрод-мониторинг</span><span>Отметка «в поездке»</span></div>
+      </div>
+      <button class="btn-primary" id="confirm-btn">Подтвердить активацию</button>
+    </div>`;
+  document.getElementById("back-btn").onclick = () => { state.flow = "activate1"; render(); };
+  document.getElementById("confirm-btn").onclick = () => {
+    state.status = { active: true, consent: true, activatedAt: new Date().toISOString() };
+    state.flow = null;
+    state.tab = "home";
+    render();
+  };
+}
+
+function renderDashboard() {
+  const r = state.lastResult;
+  screenArea.innerHTML = `
+    <div class="screen">
+      <div class="status-card">
+        <div class="status-title">Режим «Еду в Грузию» активен</div>
+        <div class="status-badges">
+          <span class="badge badge-green">Фрод-флаг: в поездке</span>
+          <span class="badge">KZT → GEL напрямую</span>
+        </div>
+        <div class="status-since">С ${new Date(state.status.activatedAt).toLocaleString("ru-RU")}</div>
+        <button class="btn-secondary" id="deactivate-btn">Деактивировать</button>
+      </div>
+      <div class="section-title">Виджет экономии</div>
+      <div class="savings-card">
+        <label class="field-label">Сумма покупки, ₸</label>
+        <input class="text-input" type="number" min="1" id="amount-input" value="50000" />
+        <button class="btn-primary" id="calc-btn">Посчитать экономию</button>
+        <div id="conversion-result"></div>
+        <div class="total-saved">Всего сэкономлено за эту сессию: <strong>${state.totalSavedGel} ₾</strong></div>
+      </div>
+    </div>`;
+  document.getElementById("deactivate-btn").onclick = () => {
+    state.status = { active: false, consent: state.status.consent, activatedAt: null };
+    render();
+  };
+  function renderResult() {
+    const box = document.getElementById("conversion-result");
+    if (!r) { box.innerHTML = ""; return; }
+    box.innerHTML = `
+      <div class="conversion-result">
+        <div class="conversion-row"><span>Без функции (${r.doubleConversion.route})</span><span>${r.doubleConversion.gel} ₾</span></div>
+        <div class="conversion-row highlight"><span>С функцией (${r.directConversion.route})</span><span>${r.directConversion.gel} ₾</span></div>
+        <div class="conversion-row savings"><span>Экономия на операции</span><span>+${r.savings.gel} ₾ (${r.savings.pct}%)</span></div>
+      </div>`;
+  }
+  renderResult();
+  document.getElementById("calc-btn").onclick = () => {
+    const amount = Number(document.getElementById("amount-input").value);
+    if (!Number.isFinite(amount) || amount <= 0) return;
+    const result = convert(amount);
+    state.lastResult = result;
+    state.totalSavedGel = Math.round((state.totalSavedGel + result.savings.gel) * 100) / 100;
+    render();
+  };
+}
+
+function renderBranches() {
+  const cities = [...new Set(BRANCHES.map(b => b.city))];
+  screenArea.innerHTML = `
+    <div class="screen">
+      <h2 class="screen-title">Отделения и банкоматы</h2>
+      <p class="screen-text">Halyk Bank Georgia — Тбилиси, Батуми, Кутаиси</p>
+      ${cities.map(city => `
+        <div class="section-title">${city}</div>
+        ${BRANCHES.filter(b => b.city === city).map(b => `
+          <div class="branch-card">
+            <div class="branch-header">
+              <span class="badge ${b.type === "branch" ? "badge-green" : ""}">${b.type === "branch" ? "Отделение" : "Банкомат"}</span>
+              <span class="branch-hours">${b.hours}</span>
+            </div>
+            <div class="branch-name">${b.name}</div>
+            <div class="branch-address">${b.address}</div>
+          </div>`).join("")}
+      `).join("")}
+    </div>`;
+}
+
+function renderFaq() {
+  const items = FAQ[state.faqLang];
+  screenArea.innerHTML = `
+    <div class="screen">
+      <h2 class="screen-title">Поддержка</h2>
+      <div class="lang-toggle">
+        <button data-lang="ru" class="${state.faqLang === "ru" ? "active" : ""}">Русский</button>
+        <button data-lang="kk" class="${state.faqLang === "kk" ? "active" : ""}">Қазақша</button>
+      </div>
+      ${items.map(item => `
+        <div class="faq-item">
+          <button class="faq-question" data-faq="${item.id}">${item.question}<span>${state.faqOpenId === item.id ? "−" : "+"}</span></button>
+          ${state.faqOpenId === item.id ? `<div class="faq-answer">${item.answer}</div>` : ""}
+        </div>`).join("")}
+      <div class="support-card">
+        <p class="screen-text">Не нашли ответ? Напишите в поддержку — запрос будет переадресован в Halyk Bank Georgia при необходимости.</p>
+        ${state.supportSent
+          ? `<div class="badge badge-green">Запрос отправлен</div>`
+          : `<button class="btn-secondary" id="support-btn">Написать в поддержку</button>`}
+      </div>
+    </div>`;
+  screenArea.querySelectorAll("[data-lang]").forEach(btn => {
+    btn.onclick = () => { state.faqLang = btn.dataset.lang; state.faqOpenId = null; render(); };
+  });
+  screenArea.querySelectorAll("[data-faq]").forEach(btn => {
+    btn.onclick = () => { state.faqOpenId = state.faqOpenId === btn.dataset.faq ? null : btn.dataset.faq; render(); };
+  });
+  const supportBtn = document.getElementById("support-btn");
+  if (supportBtn) supportBtn.onclick = () => { state.supportSent = true; render(); };
+}
+
+function renderTransactions() {
+  const showSuggestion = !state.status.active && TRANSACTIONS.some(t => t.travelTrigger);
+  screenArea.innerHTML = `
+    <div class="screen">
+      <h2 class="screen-title">Транзакции</h2>
+      ${showSuggestion ? `
+        <div class="push-banner">
+          <div class="push-title">🔔 Обнаружена покупка авиабилета/бронь отеля в Грузию</div>
+          <p class="push-text">Похоже, вы собираетесь в Грузию. Активировать режим «Еду в Грузию», чтобы избежать двойной конвертации и ложных блокировок?</p>
+          <button class="btn-primary" id="push-activate-btn">Активировать сейчас</button>
+        </div>` : ""}
+      ${TRANSACTIONS.map(t => `
+        <div class="transaction-row">
+          <div>
+            <div class="transaction-merchant">${t.merchant}</div>
+            <div class="transaction-meta">${CATEGORY_LABELS[t.category] ?? t.category} · ${t.date}
+              ${t.travelTrigger ? `<span class="badge badge-green transaction-flag">Триггер поездки</span>` : ""}
+            </div>
+          </div>
+          <div class="transaction-amount">−${t.amountKzt.toLocaleString("ru-RU")} ₸</div>
+        </div>`).join("")}
+    </div>`;
+  const pushBtn = document.getElementById("push-activate-btn");
+  if (pushBtn) pushBtn.onclick = () => { state.flow = "activate1"; render(); };
+}
+
+render();
+</script>
