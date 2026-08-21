@@ -1,0 +1,52 @@
+[
+  {
+    "id": "tbs-vake",
+    "city": "Тбилиси",
+    "type": "branch",
+    "name": "Halyk Bank Georgia — отделение Vake",
+    "address": "ул. Чавчавадзе, 37, Тбилиси",
+    "lat": 41.7186,
+    "lng": 44.7561,
+    "hours": "Пн–Пт 09:30–18:00"
+  },
+  {
+    "id": "tbs-vera",
+    "city": "Тбилиси",
+    "type": "atm",
+    "name": "Банкомат Halyk Bank Georgia — Vera",
+    "address": "пр. Руставели, 12, Тбилиси",
+    "lat": 41.6977,
+    "lng": 44.7973,
+    "hours": "Круглосуточно"
+  },
+  {
+    "id": "bat-center",
+    "city": "Батуми",
+    "type": "branch",
+    "name": "Halyk Bank Georgia — отделение Батуми",
+    "address": "ул. Гогебашвили, 4, Батуми",
+    "lat": 41.6461,
+    "lng": 41.6367,
+    "hours": "Пн–Пт 09:30–18:00"
+  },
+  {
+    "id": "bat-atm",
+    "city": "Батуми",
+    "type": "atm",
+    "name": "Банкомат Halyk Bank Georgia — набережная",
+    "address": "приморский бульвар, Батуми",
+    "lat": 41.6423,
+    "lng": 41.6339,
+    "hours": "Круглосуточно"
+  },
+  {
+    "id": "kut-center",
+    "city": "Кутаиси",
+    "type": "branch",
+    "name": "Halyk Bank Georgia — отделение Кутаиси",
+    "address": "ул. Царя Давида Строителя, 8, Кутаиси",
+    "lat": 42.2679,
+    "lng": 42.7005,
+    "hours": "Пн–Пт 09:30–18:00"
+  }
+]
